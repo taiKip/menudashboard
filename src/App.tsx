@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from 'react';
+import {Route,Switch,Redirect} from 'react-router-dom'
+
+import classes from './App.module.css';
+import { AuthContext } from './contexts/AuthContext';
+import AuthPage from './pages/AuthPage';
+import HomePage from './pages/HomePage';
+import Menu from './pages/Menu';
+import Profile from './pages/Profile';
+
 
 function App() {
+ const {isLoggedIn} = useContext(AuthContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.App}>
+      <Switch>
+        <Route path="/" exact>
+<AuthPage/>
+        </Route>
+       <Route path="/dashboard" exact>
+          <HomePage />
+        </Route>
+        {isLoggedIn && <Route path="/menu" exact>
+          <Menu />
+        </Route>}
+        {isLoggedIn && <Route path="/profile" exact>
+          <Profile />
+        </Route>}
+       
+        <Route path="*" exact>
+         <Redirect to="/"/>
+        </Route>
+</Switch>
     </div>
   );
 }
