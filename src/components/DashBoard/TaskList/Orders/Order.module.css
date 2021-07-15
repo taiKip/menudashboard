@@ -1,0 +1,19 @@
+.order{
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 10px;
+}
+.detail{
+    grid-column: 1/2;
+   
+}
+.detail span{
+    text-align: start;
+}
+.price{
+    display: grid;
+    place-items: center;
+}

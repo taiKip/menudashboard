@@ -1,6 +1,7 @@
-import { IFoodItem } from './IFoodItem';
+import { IOrderItem } from './IOrderItem';
 import { IUser } from './IUser';
 export interface IOrder{
-    orderItems: IFoodItem[],
+    id:string,
+    orderItems: IOrderItem[],
     user:IUser
 }

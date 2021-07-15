@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import {Route,Switch,Redirect} from 'react-router-dom'
 
 import classes from './App.module.css';
+import OrderDetails from './components/DashBoard/TaskList/Orders/OrderDetails';
 import { AuthContext } from './contexts/AuthContext';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
@@ -26,7 +27,7 @@ function App() {
         {isLoggedIn && <Route path="/profile" exact>
           <Profile />
         </Route>}
-       
+      
         <Route path="*" exact>
          <Redirect to="/"/>
         </Route>
