@@ -1,0 +1,24 @@
+.order-item{
+    height: 10vh;
+    width: 100%;
+    border-bottom: 1px solid gainsboro;
+    background: rgb(250, 248, 248);
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    align-items: center;
+}
+.item-name{
+    width: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    place-items: center;
+}
+.item-name p{
+    grid-column: 2/4;
+}
+.item-image{
+    height: 90%;
+
+    grid-column: 1/2;
+}

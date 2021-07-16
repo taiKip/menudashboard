@@ -1,28 +1,30 @@
-import React from 'react'
-import { useState } from 'react'
-import DeliveryOrdersList from './Orders/DeliveryOrdersList'
-import NewOrdersList from './Orders/NewOrdersList'
-import PreparingOrdersList from './Orders/PreparingOrdersList'
+
+import { useContext } from 'react'
+
+import OrderStatusContext from '../../../contexts/OrderStatusContext'
+import { orderStatusType } from '../../../Types/orderStatusType'
+import DeliveryOrdersList from './Lists/DeliveryOrdersList'
+import NewOrdersList from './Lists/NewOrdersList'
+import PreparingOrdersList from './Lists/PreparingOrdersList'
 import classes from './TaskList.module.css'
-type pages = "new"|"preparing"|"delivery"
+
 const TaskList = () => {
-    const [page, setPage] = useState<pages>("new")
-    const handleSetPage = (page:pages) => {
-        setPage(page)
-    }
+    const{page,setPage} =useContext(OrderStatusContext)
+  
+  
     return (
         <div className={classes["task-list"]}>
             <div>
                 <nav className={classes["nav-bar"]}>               
                        <h1>Task list</h1>
                 <ul>
-                    <li onClick={()=>handleSetPage("new")} className={`${classes["list-item"]} ${(page==="new")&&classes.active}`}>
+                    <li onClick={()=>setPage("new")} className={`${classes["list-item"]} ${(page==="new")&&classes.active}`}>
                         New
                     </li>
-                        <li onClick={() => handleSetPage("preparing")} className={`${classes["list-item"]} ${(page === "preparing") && classes.active}`}>
+                        <li onClick={() => setPage("prep")} className={`${classes["list-item"]} ${(page === "prep") && classes.active}`}>
                         Preparing
                     </li>
-                        <li onClick={() => handleSetPage("delivery")} className={`${classes["list-item"]} ${(page === "delivery") && classes.active}`}>
+                        <li onClick={() => setPage("ready")} className={`${classes["list-item"]} ${(page === "ready") && classes.active}`}>
                         Delivery
                     </li>
 
@@ -32,8 +34,8 @@ const TaskList = () => {
             </div>
             <div>
                 {(page === "new") && <NewOrdersList />}
-                {(page === "delivery") && <DeliveryOrdersList />}
-                {(page==="preparing")&&<PreparingOrdersList/>}
+                {(page === "ready") && <DeliveryOrdersList />}
+                {(page==="prep")&&<PreparingOrdersList/>}
             </div>
            
         </div>

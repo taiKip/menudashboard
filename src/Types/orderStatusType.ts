@@ -1,0 +1,1 @@
+export type orderStatusType="new"|"prep"|"ready"

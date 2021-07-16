@@ -1,7 +1,9 @@
+import { orderStatusType } from './../Types/orderStatusType';
 import { IOrderItem } from './IOrderItem';
 import { IUser } from './IUser';
 export interface IOrder{
     id:string,
-    orderItems: IOrderItem[],
-    user:IUser
+    orderedItems: IOrderItem[],
+    user: IUser
+    status:orderStatusType
 }

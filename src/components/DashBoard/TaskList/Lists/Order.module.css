@@ -5,6 +5,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     padding: 10px;
+    cursor: pointer;
 }
 .detail{
     grid-column: 1/2;

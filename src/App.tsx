@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import {Route,Switch,Redirect} from 'react-router-dom'
 
 import classes from './App.module.css';
-import OrderDetails from './components/DashBoard/TaskList/Orders/OrderDetails';
+import OrderDetails from './components/DashBoard/TaskList/Orders/OrderDetails/OrderDetails';
 import { AuthContext } from './contexts/AuthContext';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
