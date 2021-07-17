@@ -13,7 +13,7 @@ const NewOrdersList = () => {
     const { data, error, isLoading } = useQuery('newOrders',()=>fetchNewOrders(url))
     const {dispatch} = useContext(TaskListContext)
     //firebase returns data interms of an object which has keys which inturn has the data
-    console.log()
+
     let dataArray:IOrder[]= [];
     for (const key in data) {
         dataArray.unshift({

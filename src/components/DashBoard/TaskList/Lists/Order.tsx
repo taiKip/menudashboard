@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import OrderContext from "../../../../contexts/OrderContext";
+import OrderStatusContext from "../../../../contexts/OrderStatusContext";
 import { IOrder } from "../../../../interfaces/IOrder";
 import { IOrderItem } from "../../../../interfaces/IOrderItem";
 import classes from "./Order.module.css";
@@ -8,7 +9,8 @@ interface ITotal extends IOrderItem{
     totalAmount:number
 }
 const Order = ({ order, index }: { order: IOrder, index: number }) => {
-  const {setOrder} = useContext(OrderContext)
+  const { setOrder } = useContext(OrderContext)
+  const { page } = useContext(OrderStatusContext)
     let newArray: ITotal[] = [];
     let amount: number = 0;
   if (order) {

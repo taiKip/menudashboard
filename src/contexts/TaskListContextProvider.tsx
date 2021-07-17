@@ -1,10 +1,14 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { useReducer } from 'react'
-import { IOrder } from '../interfaces/IOrder'
 import { orderReducer } from '../reducers/orderReducer'
-import TaskListContext from './TaskListContext'
+import TaskListContext, { IState } from './TaskListContext'
 
-const initialState=[] as IOrder[]
+const initialState: IState = {
+    newOrders: [],
+    deliveryOrders: [],
+    prepOrders: [],
+    page:"new"
+}
 const TaskListContextProvider = ({children}:{children:ReactNode}) => {
     const [state,dispatch] =useReducer(orderReducer,initialState)
     return (
