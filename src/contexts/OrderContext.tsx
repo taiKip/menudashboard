@@ -10,11 +10,12 @@ const initialState: IOrder={
     },
     id: '',
     orderedItems: [],
-    status:"new"
+    status: "new",
+    date:new Date()
 };
 interface IContextType{
     order: IOrder|null,
-    setOrder:(id:string)=>void
+    setOrder:(order:IOrder)=>void
 }
-const OrderContext = createContext<IContextType>({ order: initialState, setOrder: (id:string) => { } })
+const OrderContext = createContext<IContextType>({ order: initialState, setOrder: (order:IOrder) => { } })
 export default OrderContext;

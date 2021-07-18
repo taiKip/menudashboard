@@ -1,5 +1,7 @@
 import React from "react";
 import classes from "./OrderItem.module.css";
+
+//list item on the order details page
 const OrderItem = ({ price, image, name, quantity }: { price: number, image: string, name: string, quantity: number }) => {
     const subTotal = quantity * price;
   return (

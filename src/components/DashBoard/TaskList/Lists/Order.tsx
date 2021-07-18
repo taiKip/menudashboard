@@ -2,15 +2,15 @@ import React from "react";
 import { useContext } from "react";
 import OrderContext from "../../../../contexts/OrderContext";
 import OrderStatusContext from "../../../../contexts/OrderStatusContext";
+import { dayHelper } from "../../../../helpers/dayHelper";
 import { IOrder } from "../../../../interfaces/IOrder";
 import { IOrderItem } from "../../../../interfaces/IOrderItem";
 import classes from "./Order.module.css";
 interface ITotal extends IOrderItem{
     totalAmount:number
 }
-const Order = ({ order, index }: { order: IOrder, index: number }) => {
+const Order = ({ order}: { order: IOrder }) => {
   const { setOrder } = useContext(OrderContext)
-  const { page } = useContext(OrderStatusContext)
     let newArray: ITotal[] = [];
     let amount: number = 0;
   if (order) {
@@ -27,16 +27,20 @@ const Order = ({ order, index }: { order: IOrder, index: number }) => {
      },0)
     }
   const handleClick = () => {
-    setOrder(order.id)
+    setOrder(order)
   }
+  const day = dayHelper(order.date.getDay());
+  const hour = order.date.getHours();
+  const min = order.date.getMinutes()
+  const time = `${day},${hour}:${min}`
   return (
     <li className={classes.order} onClick={handleClick}>
       <div className={classes.detail}>
         <span>
-                  <h4>Task#00{index}</h4>
+                  <h4>Task#00{`${hour}${min}`}</h4>
         </span>
         <span>
-          <p> Today,10:45</p>
+          <p>{time}</p>
         </span>
       </div>
       <div className={classes.price}>

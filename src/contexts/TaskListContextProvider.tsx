@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import { useReducer } from 'react'
 import { orderReducer } from '../reducers/orderReducer'
 import TaskListContext, { IState } from './TaskListContext'
-
 const initialState: IState = {
     newOrders: [],
     deliveryOrders: [],
@@ -10,7 +9,8 @@ const initialState: IState = {
     page:"new"
 }
 const TaskListContextProvider = ({children}:{children:ReactNode}) => {
-    const [state,dispatch] =useReducer(orderReducer,initialState)
+    const [state, dispatch] = useReducer(orderReducer, initialState)
+    
     return (
         <TaskListContext.Provider value={{state,dispatch}}>
             {children}

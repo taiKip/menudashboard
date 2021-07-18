@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import OrderContext from "../../../../../contexts/OrderContext";
 import Button from "./Button";
 import classes from "./OrderDetails.module.css";
@@ -7,87 +7,62 @@ import OrderItem from "./OrderItem";
 import PhoneIcon from "@material-ui/icons/Phone";
 import { IOrder } from "../../../../../interfaces/IOrder";
 import TaskListContext from "../../../../../contexts/TaskListContext";
-import { deletOrder } from "../../../../../helpers/deleteOrder";
-import { sendData } from "../../../../../helpers/sendData";
 import OrderStatusContext from "../../../../../contexts/OrderStatusContext";
-
+import firebase from '../../../../../data/firebase'
 const OrderDetails = () => {
   //contexts
   const { order } = useContext(OrderContext);
     const { state } = useContext(TaskListContext);
-    const {page} =useContext(OrderStatusContext)
-    let dashboardOrder: IOrder | null = state.newOrders[0];
-    console.log(page)
-  //if the new ordes page is bieng displayed ...display the order details of the selected item but the default is the first item details of the element in the new oreders array
-  if (page=== "new") {
-    if (order) {
-      dashboardOrder = order;
-    } else {
-      dashboardOrder = state.newOrders[0];
+  const { page } = useContext(OrderStatusContext)
+  //database
+  const db = firebase.firestore();
+  let dashboardOrder: IOrder | null = state.newOrders[0]; //if no order has been clicked the order details should display the details of the first order on the list
+
+  let btnText: string="Accept order";
+  
+       
+  
+  if (page === 'new') {
+    dashboardOrder = state.newOrders[0];
+    btnText = "Accept order"
     }
-  }
     if (page === "prep") {
-    
-    if (order) {
-      dashboardOrder = order;
-    } else {
       dashboardOrder = state.prepOrders[0];
-    }
-  }
-
-  const [error, setError] = useState<string | null>(null);
-    const handleStatus = () => {
-        if (page === "new") {
-          //if user is on new orders state and accepts the order ...the order is sent to  the database 
-    if (order) {
-      sendData(
-        "https://happy-meals-bbca2-default-rtdb.firebaseio.com/preparing.json",
-        order
-      ).catch((error) => {
-        setError(error.message);
-      });
-      deletOrder(
-        "https://happy-meals-bbca2-default-rtdb.firebaseio.com/orders/",
-        order.id
-      );
-            }
-        } else if (page === "prep") {
-            //if user is on page prep and presses button on which the button will be ready ...the order is sent to the delivery node and removed from preparing node
-            console.log("in prep post")
-            if (order) {
-                console.log("in prep post")
-                sendData(
-                    "https://happy-meals-bbca2-default-rtdb.firebaseio.com/delivery.json",
-                    order
-                ).catch((error) => {
-                    setError(error.message);
-                });
-                deletOrder(
-                    "https://happy-meals-bbca2-default-rtdb.firebaseio.com/preparing/",
-                    order.id
-                );
-            }
-        }
-  };
-  let btnText: string;
-  switch (page) {
-    case "new":
-      btnText = "Accept order"
-      break;
-    case "prep":
       btnText = "Ready"
-      break;
-    case "ready":
+    }
+    if (page === "ready") {
+      dashboardOrder = state.deliveryOrders[0];
       btnText = "Assign courior"
-      break;
-    default:
-      btnText="Accept order"
- }
+    }
 
+  
+   
+
+  if (order) {
+    dashboardOrder = order; //if theres an order clicked show the preview of it on order details
+  }
+  const handleStatus = () => {
+    if (order) {
+   
+    switch (page) {
+      case 'new':
+        db.collection('prepOrders').add(order)
+        db.collection('orders').doc(order.id).delete();
+        break;
+      case 'prep':
+        db.collection('deliveryOrders').add(order);
+        db.collection('prepOrders').doc(order.id).delete()
+        break;
+      }
+
+
+    }
+   
+
+  }
   return (
     <>
-      {error && <p style={{ color: "red" }}>Something went wrong</p>}
-      {!dashboardOrder && !error && <h1>You have no orders pending</h1>}
+   {!dashboardOrder&&<h3>No orders Available</h3>}
       {dashboardOrder && (
         <div className={classes["order-details"]}>
           <div className={classes.header}>

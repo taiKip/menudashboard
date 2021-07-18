@@ -1,39 +1,23 @@
-import React from 'react'
-import { useContext,useEffect } from 'react'
-import { useQuery } from 'react-query';
+import { useEffect } from 'react'
+import Order from './Order'
+import classes from './NewOrdersList.module.css'
 import TaskListContext from '../../../../contexts/TaskListContext'
-import { fetchNewOrders } from '../../../../helpers/fetchData';
-import { IOrder } from '../../../../interfaces/IOrder';
-
+import { useContext } from 'react'
+import useFetch from '../../../../hooks/useFetch'
 const DeliveryOrdersList = () => {
-  const url = "https://happy-meals-bbca2-default-rtdb.firebaseio.com/delivery.json";
-  const { data, error, isLoading } = useQuery("fetchDelivery", () => fetchNewOrders(url))
-  const { dispatch} = useContext(TaskListContext)
-  
-  let dataArray: IOrder[] = [];
-  if (data) {
-    for (const key in data) {
-      dataArray.push({
-        id: key,
-        orderedItems: data[key].orderedItems,
-        user: data[key].user,
-        status: data[key].status
-      })
-
-    }
-
-
-
-  }
+  const { orders: newOrders } = useFetch('deliveryOrders')
+  const { dispatch } = useContext(TaskListContext)
   useEffect(() => {
-    dispatch({ type: "prep", payload: dataArray })
-  }, [data])
-
-    return (
-        <div>
-       
-        </div>
-    )
+  
+    dispatch({ type: "ready", payload: newOrders })
+    
+  }, [newOrders])
+  return (
+    <ul className={classes["order-list"]}>
+      {newOrders.length > 0 &&
+        newOrders.map((order) => <Order key={order.id} order={order} />)}
+    </ul>
+  )
 }
 
 export default DeliveryOrdersList

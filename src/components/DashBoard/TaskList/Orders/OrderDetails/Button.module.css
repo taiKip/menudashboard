@@ -14,6 +14,9 @@
 .ready{
     background: rgb(95, 143, 23);
 }
+.assign{
+    background: rgb(107, 11, 151);
+}
 .button:active{
     transform: scale(1.2);
 }

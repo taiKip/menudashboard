@@ -5,5 +5,6 @@ export interface IOrder{
     id:string,
     orderedItems: IOrderItem[],
     user: IUser
-    status:orderStatusType
+    status: orderStatusType,
+    date: Date
 }
