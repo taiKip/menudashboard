@@ -1,37 +1,30 @@
-import { useContext } from 'react';
-import {Route,Switch,Redirect} from 'react-router-dom'
+import { useContext } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 
-import classes from './App.module.css';
-import OrderDetails from './components/DashBoard/TaskList/Orders/OrderDetails/OrderDetails';
-import { AuthContext } from './contexts/AuthContext';
-import AuthPage from './pages/AuthPage';
-import HomePage from './pages/HomePage';
-import Menu from './pages/Menu';
-import Profile from './pages/Profile';
+import classes from "./App.module.css";
 
+import { AuthContext } from "./contexts/AuthContext";
+import AuthPage from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
- const {isLoggedIn} = useContext(AuthContext)
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <div className={classes.App}>
       <Switch>
         <Route path="/" exact>
-<AuthPage/>
+          <AuthPage />
         </Route>
-       <Route path="/dashboard" exact>
-          <HomePage />
-        </Route>
-        {isLoggedIn && <Route path="/menu" exact>
-          <Menu />
-        </Route>}
-        {isLoggedIn && <Route path="/profile" exact>
-          <Profile />
-        </Route>}
-      
+        {isLoggedIn && (
+          <Route path="/dashboard" exact>
+            <HomePage />
+          </Route>
+        )}
+
         <Route path="*" exact>
-         <Redirect to="/"/>
+          <Redirect to="/" />
         </Route>
-</Switch>
+      </Switch>
     </div>
   );
 }

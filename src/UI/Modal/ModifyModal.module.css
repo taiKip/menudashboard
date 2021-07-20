@@ -1,0 +1,42 @@
+.backdrop{
+  position: fixed;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.534);  
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  
+}
+.modal{
+    z-index: 30;
+    position:fixed;
+  padding: 20px;
+  border-radius: 10px;
+    width: 50%;
+    left:25%;
+    right: 25%;
+    background: white;
+    transition: all 1s;
+    transform: translateY(-50vh);
+    animation: animate-modal 1s linear forwards;
+     background:#60576b;
+}
+
+
+   
+
+@keyframes animate-modal {
+     0%{transform: translateY(-50vh);}
+       90%{transform: translateY(5vh);}
+       100%{transform: translateY(0);}
+}
+@media  screen and (max-width:480px) {
+   .modal{
+     width: 80%;
+     left: 10%;
+   }
+   .modal {
+   padding: 0;
+   }
+}

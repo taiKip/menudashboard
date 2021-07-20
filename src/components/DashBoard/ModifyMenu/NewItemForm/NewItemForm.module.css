@@ -1,0 +1,51 @@
+.add div{
+display: grid;
+grid-template-columns: 1fr;
+width: 60%;
+margin: 10px auto;
+text-align: start;
+}
+.add textarea{
+    font-family: inherit;
+    font-size: 1.2em;
+    padding: 8px;
+     border: 1px solid #120323;
+     border-radius: 5px;
+}
+.add input{
+  padding: 5px;
+    font-size: 1.3em;
+     border-radius: 5px;
+     border: 1px solid #120323;
+}
+
+.button{
+
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+border: none;
+box-shadow: 3px 4px 6px grey;
+background: green;
+color: white;
+cursor: pointer;
+transition: all 0.3s;
+}
+.button:disabled{
+  background-color: grey;
+}
+.button:active{
+  transform: scale(1.1);
+}
+.button:nth-child(2){
+  background: red;
+}
+.controls{
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+  justify-content: center;
+  gap: 1.5rem;
+}
