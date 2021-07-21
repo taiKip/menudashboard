@@ -1,5 +1,7 @@
-import React, { ReactNode } from 'react'
+import  { ReactNode } from 'react'
+import ReactDom from 'react-dom'
 import classes from './ModifyModal.module.css'
+
 const ModifyModal = ({children,click}:{children:ReactNode,click:()=>void}) => {
     return (
         <>

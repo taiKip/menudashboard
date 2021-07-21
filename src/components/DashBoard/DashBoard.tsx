@@ -7,7 +7,7 @@ import TaskListContextProvider from "../../contexts/TaskListContextProvider";
 import TaskContextProvider from "../../contexts/OrderContextProvider";
 import OrderDetails from "./TaskList/Orders/OrderDetails/OrderDetails";
 import OrderStatusContextProvider from "../../contexts/OrderStatusContextProvider";
-import Profile from "../../assets/profile.jpg";
+
 import ModifyMenu from "./ModifyMenu/ModifyMenu";
 import SearchContextProvider from "../../contexts/SearchContext";
 import MenuContextProvider from "../../contexts/MenuContext";
@@ -27,16 +27,19 @@ const DashBoard = () => {
       <TaskContextProvider>
         <OrderStatusContextProvider>
           <MenuContextProvider>
-                      <SearchContextProvider>
-                          {show && <ModifyModal click={toggle}>
-                              <OrderDetails />
-                          </ModifyModal>
-                          }
+            <SearchContextProvider>
+              <div className={classes.modal}>
+                {show && <ModifyModal click={toggle}>
+                  <OrderDetails toggle={toggle}/>
+                </ModifyModal>
+                }
+              </div>
+                          
               <div className={classes["dash-board"]}>
                 <div className={classes.wrapper}>
                   <div className={classes.nav}>
                     <div className={classes.profile}>
-                      <img src={Profile} alt="profile" />
+
                     </div>
                     <div onClick={() => setDisplay("list")}>
                       <ListAltOutlinedIcon
@@ -62,7 +65,7 @@ const DashBoard = () => {
                   {display === "list" && (
                     <div className={classes.main}>
                       <div className={classes.tasks}>
-                        <TaskList />
+                        <TaskList toggleModal={toggle}/>
                       </div>
                       <div className={classes.details}>
                         <OrderDetails />

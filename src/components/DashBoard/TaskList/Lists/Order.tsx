@@ -9,7 +9,7 @@ import classes from "./Order.module.css";
 interface ITotal extends IOrderItem{
     totalAmount:number
 }
-const Order = ({ order}: { order: IOrder }) => {
+const Order = ({ order,toggle}: { order: IOrder ,toggle:()=>void }) => {
   const { setOrder } = useContext(OrderContext)
     let newArray: ITotal[] = [];
     let amount: number = 0;
@@ -28,13 +28,14 @@ const Order = ({ order}: { order: IOrder }) => {
     }
   const handleClick = () => {
     setOrder(order)
+    toggle()
   }
   const day = dayHelper(order.date.getDay());
   const hour = order.date.getHours();
   const min = order.date.getMinutes()
   const time = `${day},${hour}:${min}`
   return (
-    <li className={classes.order} onClick={handleClick}>
+    <li className={classes.order} onClick={handleClick} >
       <div className={classes.detail}>
         <span>
                   <h4>Task#00{`${hour}${min}`}</h4>

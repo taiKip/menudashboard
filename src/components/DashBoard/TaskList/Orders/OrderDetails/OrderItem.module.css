@@ -22,3 +22,16 @@
 
     grid-column: 1/2;
 }
+
+
+@media screen and (max-width:480px) {
+  .order-item{
+      height: 6vh;
+  }
+  .item-name p{
+    grid-column: 1/2;
+  }
+  .item-image{
+      display: none;
+  }
+}

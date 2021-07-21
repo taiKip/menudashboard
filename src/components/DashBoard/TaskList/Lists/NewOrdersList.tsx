@@ -4,7 +4,7 @@ import classes from "./NewOrdersList.module.css";
 import Order from "./Order";
 import useFetch from "../../../../hooks/useFetch";
 
-const NewOrdersList = () => {
+const NewOrdersList = ({toggle}:{toggle:()=>void}) => {
   const { dispatch } = useContext(TaskListContext);
   const { orders: newOrders,error,loading } = useFetch("orders");
 
@@ -20,7 +20,7 @@ const NewOrdersList = () => {
           {loading && <p>Loading...</p>}
           {error && <p>{error}</p>}
       {newOrders.length > 0 &&
-        newOrders.map((order) => <Order key={order.id} order={order} />)}
+        newOrders.map((order) => <Order key={order.id} order={order} toggle={toggle} />)}
     </ul>
   );
 };

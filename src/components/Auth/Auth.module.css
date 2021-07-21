@@ -3,6 +3,7 @@
     width: 100%;
     grid-template-columns: 2fr 1fr;
 height: 100vh;
+
 }
 .shape{
     width: 100%;
@@ -39,20 +40,25 @@ padding: 20px;
 .input-form div{
   
 width: 100%;
+border-radius: 5px;
 display: grid;
 grid-template-columns: 1fr 3fr;
 gap: 0.5rem;
 place-items: center;
- overflow: hidden;
+ overflow-y: hidden;
+
 }
+
 .input{
   padding: 8px 10px;
   width: 100%;
-  border-radius: 5px;
+  height: 100%;
+ 
   border: none;
   background: #DEF2F1;
 font-size: inherit;
 color:black;
+
 }
 .invalid{
 border: 2px solid #950740;
@@ -61,14 +67,19 @@ border: 2px solid #950740;
     text-align: left;
     width: 100%;
 }
+.input-form label::after{
+    content: '*';
+    color: red;
+}
 .input-form button{
    grid-column: 2/3;
    width: 100%;
    padding: 8px 10px;
    border-radius: 5px;
    border: none;
-   background: lightgreen;
+   background: rgb(32, 184, 32);
    font-size: inherit;
+   color: white;
 }
 .password{
     display: flex;
@@ -76,10 +87,17 @@ width: 100%;
 align-items: center;
 border-radius: 5px;
 overflow: hidden;
+
 }
 .password input{
-    width: 100%;
+    
     border-radius: 0;
+}
+.visibility{
+    display: grid;
+    place-items: center;
+  
+    height: 100%;
 }
 .input-form button:active{
     transform: scale(1.1);
@@ -95,5 +113,23 @@ overflow: hidden;
     .wrapper{
         grid-template-columns: 1fr;
         grid-template-rows: 400px 1fr;
+    }
+}
+.controls p{
+    grid-column: 2/3;
+    color: salmon;
+    cursor: pointer;
+}
+@media screen and (max-width:480px) {
+    .wrapper{
+        grid-template-rows: 300px 1fr;
+    }
+    .input-form{
+        width: 100%;
+        display: flex;
+    }
+    .input-form div{
+display: flex;
+flex-direction: column;
     }
 }

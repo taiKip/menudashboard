@@ -13,6 +13,18 @@ font-weight: bold;
     font-size: 1.2em;
 }
 
+@media screen and (max-width:480px) {
+    .menu{
+        grid-template-columns: 1fr;
+       padding: 10px;
+        left: 0;
+gap: 0rem;
+    }
+    .menu div{
+        min-width: 0;
+        margin: 0;
+    }
+}
 
 
 

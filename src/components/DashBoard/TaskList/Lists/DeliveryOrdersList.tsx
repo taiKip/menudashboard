@@ -4,7 +4,7 @@ import classes from './NewOrdersList.module.css'
 import TaskListContext from '../../../../contexts/TaskListContext'
 import { useContext } from 'react'
 import useFetch from '../../../../hooks/useFetch'
-const DeliveryOrdersList = () => {
+const DeliveryOrdersList = ({toggle}:{toggle:()=>void}) => {
   const { orders: newOrders } = useFetch('deliveryOrders')
   const { dispatch } = useContext(TaskListContext)
   useEffect(() => {
@@ -15,7 +15,7 @@ const DeliveryOrdersList = () => {
   return (
     <ul className={classes["order-list"]}>
       {newOrders.length > 0 &&
-        newOrders.map((order) => <Order key={order.id} order={order} />)}
+        newOrders.map((order) => <Order key={order.id} order={order} toggle={toggle}/>)}
     </ul>
   )
 }

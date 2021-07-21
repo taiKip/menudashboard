@@ -9,7 +9,7 @@ import { IOrder } from "../../../../../interfaces/IOrder";
 import TaskListContext from "../../../../../contexts/TaskListContext";
 import OrderStatusContext from "../../../../../contexts/OrderStatusContext";
 import firebase from '../../../../../data/firebase'
-const OrderDetails = () => {
+const OrderDetails = ({toggle}:{toggle?:()=>void}) => {
   //contexts
   const { order } = useContext(OrderContext);
     const { state } = useContext(TaskListContext);
@@ -57,7 +57,10 @@ const OrderDetails = () => {
 
 
     }
-   
+    if (toggle) {
+      toggle();
+    }
+
 
   }
   return (
@@ -83,10 +86,12 @@ const OrderDetails = () => {
               </span>
               <span className={classes.phone}>
                 <span className={classes.phoneNum}>
-                  <p>{dashboardOrder.user.name}</p>
+                  <h3>{dashboardOrder.user.name}</h3>
+                  <p>Phone Number</p>
+
                   <h3>{dashboardOrder.user.phoneNumber}</h3>
                 </span>
-                <span>
+                <span className={classes.phoneIcon}>
                   <PhoneIcon style={{ color: "green", fontSize: 40 }} />
                 </span>
               </span>

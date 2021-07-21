@@ -77,16 +77,16 @@ setPrice(event.target.value)
         </div>
         <div>
           <label htmlFor={type + "description"}>description</label>
-          <textarea id={type + "description"} rows={4} spellCheck={true} value={description} onChange={handleDescription}/>
+          <textarea id={type + "description"} rows={5} spellCheck={true} value={description} onChange={handleDescription}/>
         </div>
         <div>
           <label htmlFor={type + "price"}>price</label>
           <input id={type + "price"} type="number" onChange={handlePrice} value={price} required/>
         </div>
-        <span className ={classes.controls}> 
+        <div className ={classes.controls}> 
         <button type="submit" className={classes.button} disabled={!name || !description || !price}>{(type === "modify") ? "Update" : "Add"}</button>
           {(type === "modify") && <button className={classes.button} onClick={handleDelete} >Delete</button>}
-        </span>
+        </div>
       </form>
     </div>
   );

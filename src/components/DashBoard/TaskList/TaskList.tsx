@@ -7,7 +7,7 @@ import NewOrdersList from "./Lists/NewOrdersList";
 import PreparingOrdersList from "./Lists/PreparingOrdersList";
 import classes from "./TaskList.module.css";
 
-const TaskList = () => {
+const TaskList = ({toggleModal}:{toggleModal:()=>void}) => {
   const { page, setPage } = useContext(OrderStatusContext);
   return (
     <div className={classes["task-list"]}>
@@ -40,9 +40,9 @@ const TaskList = () => {
         </nav>
       </div>
       <div>
-        {page === "new" && <NewOrdersList />}
-        {page === "ready" && <DeliveryOrdersList />}
-        {page === "prep" && <PreparingOrdersList />}
+        {page === "new" && <NewOrdersList toggle={ toggleModal}/>}
+        {page === "ready" && <DeliveryOrdersList toggle={toggleModal} />}
+        {page === "prep" && <PreparingOrdersList toggle={toggleModal}/>}
       </div>
     </div>
   );

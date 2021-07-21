@@ -37,3 +37,24 @@ box-shadow: 3px 4px 6px grey;
 cursor: pointer;
 
 }
+@media screen and (max-width:480px) {
+
+.modify select{
+    min-width: 0;
+}
+    .modify h1{
+    font-size: 1.2em;
+    
+    }
+    .modify div{
+        min-width: 0;
+       width: 90%;
+       margin:20px 2px;
+    }
+    .modify input{
+        min-width:0;
+    }
+   
+    
+}
+

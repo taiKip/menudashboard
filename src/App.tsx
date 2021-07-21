@@ -7,6 +7,7 @@ import { AuthContext } from "./contexts/AuthContext";
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
 
+
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
   return (
@@ -15,12 +16,12 @@ function App() {
         <Route path="/" exact>
           <AuthPage />
         </Route>
-        {isLoggedIn && (
-          <Route path="/dashboard" exact>
-            <HomePage />
-          </Route>
-        )}
-
+       (
+        {isLoggedIn && <Route path="/dashboard" exact>
+          <HomePage />
+        </Route>}
+        
+    
         <Route path="*" exact>
           <Redirect to="/" />
         </Route>

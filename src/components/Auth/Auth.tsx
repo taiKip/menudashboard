@@ -1,20 +1,19 @@
 import classes from "./Auth.module.css";
 import HomeImage from "../../assets/home.jpg";
 import { ChangeEventHandler, FormEventHandler } from "react";
-import { useState} from "react";
+import { useState } from "react";
 import { EMAILREGEX, PASSWORDREGEX } from "./Regex";
 import { FocusEventHandler } from "react";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import VisiblityIcon from '@material-ui/icons/Visibility'
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisiblityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import { Blurhash } from "react-blurhash";
 
 const Auth = () => {
-  
-  const history = useHistory()
-  const { login } = useContext(AuthContext)
+  const history = useHistory();
+  const { login } = useContext(AuthContext);
   //auth details validation
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,13 +21,18 @@ const Auth = () => {
   const [isPasswordValid, setPasswordIsValid] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
-  const [authError, setAuthError] = useState<string | null>(null)
+  const [authError, setAuthError] = useState<string | null>(null);
+  //Toggle createaccout/sign in
+  const [createAccount, setCreateAccount] = useState(false);
+  const toggleSign = () => {
+    setCreateAccount((prev) => !prev);
+  };
   //toggle show user password input
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   //blurhashtoggle
-  const [showImage, setShowImage] = useState(false)
+  const [showImage, setShowImage] = useState(false);
   //image styles
-  const style = !showImage?classes.hide:""
+  const style = !showImage ? classes.hide : "";
   let emailStyles = `${classes.input} ${
     emailTouched && (isEmailValid ? "" : classes.invalid)
   }`;
@@ -62,114 +66,189 @@ const Auth = () => {
     }
   };
   const handleSubmit: FormEventHandler = (event) => {
-    
+    const url = "https://identitytoolkit.googleapis.com/v1/accounts";
     event.preventDefault();
     if (isEmailValid && isPasswordValid) {
-      fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBRueLp-eau05AFyomIECE8WCHEFCkmYfY", {
-        method: 'POST',
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken:true
-        }),
-        headers: { "Content-Type": "application/json" }
-      })
-        .then(res => {
-          if (!res.ok) {
-            return res.json().then(data => {
-              if (data) {
-              throw new Error(data.error.message)
-            }
-          })
-         
+      if (createAccount) {
+        fetch(
+          `${url}:signInWithPassword?key=AIzaSyBRueLp-eau05AFyomIECE8WCHEFCkmYfY`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: email,
+              password: password,
+              returnSecureToken: true,
+            }),
+            headers: { "Content-Type": "application/json" },
           }
-          return res.json()
-        }).then(data => {
-          const tokenExpiry= new Date(new Date().getTime()+(data.expiresIn)*1000 )
-         login(data.idToken,tokenExpiry)
-          history.replace("/dashboard")
-        }).catch(error => {
-        
-        setAuthError(error.message)
-      })
-    } 
+        )
+          .then((res) => {
+            if (!res.ok) {
+              return res.json().then((data) => {
+                if (data) {
+                  throw new Error(data.error.message);
+                }
+              });
+            }
+            return res.json();
+          })
+          .then((data) => {
+            const tokenExpiry = new Date(
+              new Date().getTime() + data.expiresIn * 1000
+            );
+            login(data.idToken, tokenExpiry);
+            history.replace("/dashboard");
+          })
+          .catch((error) => {
+            setAuthError(error.message);
+          });
+      } else {
+        fetch(
+          `${url}:signInWithPassword?key=AIzaSyBRueLp-eau05AFyomIECE8WCHEFCkmYfY`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: email,
+              password: password,
+              returnSecureToken: true,
+            }),
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+          .then((res) => {
+            if (!res.ok) {
+              return res.json().then((data) => {
+                if (data) {
+                  throw new Error(data.error.message);
+                }
+              });
+            }
+            return res.json();
+          })
+          .then((data) => {
+            const tokenExpiry = new Date(
+              new Date().getTime() + data.expiresIn * 1000
+            );
+            login(data.idToken, tokenExpiry);
+            history.replace("/dashboard");
+          })
+          .catch((error) => {
+            setAuthError(error.message);
+          });
+      }
+    }
   };
-  let  errorMessage: string | null="Authentication Failed";
+  let errorMessage: string | null = "Authentication Failed";
   if (authError) {
     switch (authError) {
       case "EMAIL_NOT_FOUND":
-        errorMessage = "Authentication failed please check your email"
+        errorMessage = "Authentication failed please check your email";
         break;
       case "INVALID_PASSWORD":
-        errorMessage = "Authentication failed please check your password"
+        errorMessage = "Authentication failed please check your password";
         break;
       case "USER_DISABLED":
-        errorMessage = "Authentication failed,your account has been disabled"
+        errorMessage = "Authentication failed,your account has been disabled";
         break;
     }
   }
   const togglePasswordVisibility = () => {
-    setShowPassword(prev=>!prev)
-  }
+    setShowPassword((prev) => !prev);
+  };
   const handleOnload = () => {
-    setShowImage(true)
-  }
+    setShowImage(true);
+  };
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.shape}>
-        {!showImage && <Blurhash
-          hash="L6BV^d9Z5TiH~CE2t7Mx00pIxtOZ"
-          width={1500}
-          height={1500}
-          resolutionX={32}
-          resolutionY={32}
-          punch={1}
-        />}
+        {!showImage && (
+          <Blurhash
+            hash="L6BV^d9Z5TiH~CE2t7Mx00pIxtOZ"
+            width={1500}
+            height={1500}
+            resolutionX={32}
+            resolutionY={32}
+            punch={1}
+          />
+        )}
 
-        <img className={style} src={HomeImage} alt="Sign in Page" onLoad={handleOnload} />
+        <img
+          className={style}
+          src={HomeImage}
+          alt="Sign in Page"
+          onLoad={handleOnload}
+        />
       </div>
       <div className={classes.authentication}>
         <div>
-          <h1>Sign in</h1>
+          <h1>{createAccount ? "Sign Up" : "Sign In"}</h1>
         </div>
-        {authError && <p style={{color:"red"}}>{errorMessage}</p>}
+        {authError && <p style={{ color: "red" }}>{errorMessage}</p>}
         <form className={classes["input-form"]} onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>
-             <input
+            <input
               className={emailStyles}
               id="email"
-              placeholder="johndoe@example.com"
               type="email"
               required
               value={email}
               onChange={handleEmail}
               onBlur={handleEmailOnBlur}
             />
-            
-           
           </div>
-          <div>
-          <label htmlFor="password">Password</label>
-          <span className={classes.password}>
-            <input
-              className={passwordStyles}
-              id="password"
-              minLength={6}
-              type={showPassword?"text":"password"}
-              required
-              value={password}
-              onChange={handlePassword}
+          <div className={classes["password-div"]}>
+            <label htmlFor="password">Password</label>
+            <span className={classes.password}>
+              <input
+                className={passwordStyles}
+                id="password"
+                minLength={6}
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={handlePassword}
                 onBlur={handlePasswordOnBlur}
-               
               />
-              {!showPassword && <VisiblityIcon style={{ background: "#DEF2F1", height: 40 }} onClick={togglePasswordVisibility }/>}
-              {showPassword && <VisibilityOffIcon style={{ background: "#DEF2F1", height: 40 }} onClick={togglePasswordVisibility}/>}
+
+              {!showPassword && (
+                <VisiblityIcon
+                  style={{
+                    background: "#DEF2F1",
+                    fontSize: "1.1em",
+                    height: "100%",
+                    padding: "8px 0",
+                  }}
+                  onClick={togglePasswordVisibility}
+                />
+              )}
+              {showPassword && (
+                <VisibilityOffIcon
+                  style={{
+                    background: "#DEF2F1",
+                    height: "100%",
+                    fontSize: "1.1em",
+                    padding: "8px 0",
+  
+                  }}
+                  onClick={togglePasswordVisibility}
+                />
+              )}
             </span>
           </div>
-          <div>
-            <button type="submit">Login</button>
+          <div className={classes.controls}>
+            <button
+              type="submit"
+              style={{ background: `${createAccount ? "purple" : ""}` }}>
+              {createAccount ? "Create Account" : "Login"}
+            </button>
+            <p onClick={toggleSign}>
+              {" "}
+              {createAccount
+                ? "Login with existing account"
+                : "Create new account"}
+            </p>
           </div>
         </form>
       </div>

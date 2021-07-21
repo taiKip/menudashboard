@@ -7,8 +7,28 @@
       padding: 8px;
     width: 100%;
     margin:0 auto;
-}
-.menu-item div{
-overflow: hidden;
+    
 }
 
+
+@media screen and (max-width:480px) {
+
+.menu-item{
+    min-width: 0;
+width: 100%;
+
+}
+
+.menu-item span{
+  min-width:30px;
+  overflow: scroll;
+}
+    .modify h1{
+    font-size: 1.2em;
+    
+    }
+ 
+  
+   
+    
+}
